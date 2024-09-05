@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vehicle Info Lookup</title>
+  <!-- Manifest File link -->
+  <link rel="manifest"
+        href="manifest.json">
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #004e92, #000428);
+      color: white;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(245, 177, 177, 0.2);
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    h1 {
+      color: #ffD351;
+      font-weight: bold;
+    }
+
+    .form-label {
+      font-weight: 600;
+      color: #f8f9fa;
+    }
+
+    .form-control {
+      background-color: #ffffff;
+      color: #f8f9fa;
+      border: 1px solid #ffD351;
+      padding: 15px;
+      font-size: 16px;
+    }
+
+    .btn {
+      background-color: #ffD351;
+      color: #333;
+      padding: 12px;
+      border: none;
+      width: 100%;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 8px;
+    }
+
+    .btn:hover {
+      background-color: #ffc107;
+    }
+
+    .result .cube {
+      background-color: rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      margin: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .cube h3 {
+      font-size: 16px;
+      color: #ffD351;
+    }
+
+    .cube p {
+      color: white;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 20px;
+      }
+
+      .btn {
+        font-size: 16px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center">Vehicle Information Lookup</h1>
+    <form id="vehicleForm">
+      <div class="mb-3">
+        <label for="reg_no" class="form-label">Enter Vehicle Registration Number</label>
+        <input type="text" class="form-control" id="reg_no" name="reg_no" placeholder="e.g. GJ01AA0000" required>
+      </div>
+      <button type="submit" class="btn">Get Vehicle Info</button>
+    </form>
+
+    <div id="result" class="row mt-4"></div>
+  </div>
+  <script>
+    window.addEventListener('load', () => {
+      registerSW();
+    });
+ 
+    // Register the Service Worker
+    async function registerSW() {
+      if ('serviceWorker' in navigator) {
+        try {
+          await navigator
+                .serviceWorker
+                .register('serviceworker.js');
+        }
+        catch (e) {
+          console.log('SW registration failed');
+        }
+      }
+    }
+ </script>
+  <script>
+    document.getElementById('vehicleForm').addEventListener('submit', function (event) {
+      event.preventDefault();
+      const regNo = document.getElementById('reg_no').value;
+      const data = JSON.stringify({
+        reg_no: regNo,
+        consent: 'Y',
+        consent_text: 'I hereby declare my consent agreement for fetching my information via AITAN Labs API'
+      });
+
+      const xhr = new XMLHttpRequest();
+
+      xhr.addEventListener('readystatechange', function () {
+        if (this.readyState === this.DONE) {
+          const response = JSON.parse(this.responseText);
+          if (response.status === "success") {
+            displayVehicleInfo(response.result);
+          } else {
+            alert("Vehicle information not found!");
+          }
+        }
+      });
+
+      xhr.open('POST', 'https://rto-vehicle-information-verification-india.p.rapidapi.com/api/v1/rc/vehicleinfo');
+      xhr.setRequestHeader('x-rapidapi-key', '17e95549e2msh0976469fb4c09cfp150930jsnead63a029f6a');
+      xhr.setRequestHeader('x-rapidapi-host', 'rto-vehicle-information-verification-india.p.rapidapi.com');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.send(data);
+    });
+
+    function displayVehicleInfo(data) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = ''; // Clear previous result
+
+      function createCube(label, value) {
+        const cube = document.createElement('div');
+        cube.classList.add('cube', 'col-md-6');
+        cube.innerHTML = `<h3>${label}</h3><p>${value || 'N/A'}</p>`;
+        return cube;
+      }
+
+      function parseData(obj, prefix = '') {
+        for (const key in obj) {
+          if (obj.hasOwnProperty(key)) {
+            const value = obj[key];
+            const label = prefix ? `${prefix} > ${key}` : key;
+            if (typeof value === 'object' && value !== null) {
+              parseData(value, label); // Recursively parse nested objects
+            } else {
+              resultDiv.appendChild(createCube(label, value));
+            }
+          }
+        }
+      }
+
+      // Display all data recursively
+      parseData(data);
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>  
+</body>
+
+</html>

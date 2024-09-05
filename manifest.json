@@ -1,0 +1,50 @@
+{
+    "name":"Vehicle Information",
+    "short_name":"Vehicle Info",
+    "start_url":"index.html",
+    "display":"standalone",
+    "background_color":"#0000",
+    "theme_color":"black",
+    "scope": ".",
+    "description":"Vehicle Information Lookup by Krushil Shah ",
+    "icons":[
+    {
+    "src":"image/icon173x173.jpeg",                     
+    "sizes":"173x173",
+    "type":"image/jpeg",
+    "purpose":"any"
+    },
+    {
+    "src":"image/icon130x130.jpeg",                     
+    "sizes":"130x130",
+    "type":"image/jpeg",
+    "purpose":"any"
+    },
+    {
+    "src":"image/icon170x170.jpeg",
+    "sizes":"170x170",
+    "type":"image/jpeg",
+    "purpose":"any"
+    },
+    {
+    "src":"image/icon144x144.png",
+    "sizes":"144x144",
+    "type":"image/png",
+    "purpose":"any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/image/icon320.jpeg",
+      "type": "image/jpeg",
+      "sizes": "320x320",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/image/icon320.jpeg",
+      "type": "image/jpeg",
+      "sizes": "320x320",
+      "form_factor": "wide"
+    }
+  ]
+}

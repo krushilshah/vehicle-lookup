@@ -1,0 +1,77 @@
+body {
+    background: linear-gradient(to right, #004e92, #000428);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(245, 177, 177, 0.2);
+    padding: 30px;
+    max-width: 600px;
+    margin: auto;
+}
+
+h1 {
+    color: #ffD351;
+    font-weight: bold;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #f8f9fa;
+}
+
+.form-control {
+    background-color: #ffffff;
+    color: #f8f9fa;
+    border: 1px solid #ffD351;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.btn {
+    background-color: #ffD351;
+    color: #333;
+    padding: 12px;
+    border: none;
+    width: 100%;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+}
+
+.btn:hover {
+    background-color: #ffc107;
+}
+
+.result .cube {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cube h3 {
+    font-size: 16px;
+    color: #ffD351;
+}
+
+.cube p {
+    color: white;
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .btn {
+        font-size: 16px;
+        padding: 10px;
+    }
+}

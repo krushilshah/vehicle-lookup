@@ -146,12 +146,13 @@
         }
       });
 
-      xhr.open('POST', 'https://rto-vehicle-information-verification-india.p.rapidapi.com/api/v1/rc/vehicleinfo');
-      xhr.setRequestHeader('x-rapidapi-key', '4fc55ea3bcmsh1928836532008f2p196e93jsnf33e1c0ba7ab');
-      xhr.setRequestHeader('x-rapidapi-host', 'rto-vehicle-information-verification-india.p.rapidapi.com');
+   
+      xhr.open('POST', 'https://rto-vehicle-information-india.p.rapidapi.com/getVehicleInfo');
+      xhr.setRequestHeader('x-rapidapi-key', '634eba0de6msh5a7fcb0de21eb34p1bcfb7jsnc2ddbd1d9607');
+      xhr.setRequestHeader('x-rapidapi-host', 'rto-vehicle-information-india.p.rapidapi.com');
       xhr.setRequestHeader('Content-Type', 'application/json');
 
-      xhr.send(data);
+xhr.send(data);
     });
 
     function displayVehicleInfo(data) {
